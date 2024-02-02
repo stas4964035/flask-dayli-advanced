@@ -1,6 +1,12 @@
 from datetime import datetime
 from dayli import db
-from flask_loginmanager import UserMixin
+from flask_login import UserMixin
+from dayli import db, login_manager
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 class User(db.Model, UserMixin):
