@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from dayli.config import Config
+from flask_bcrypt import Bcrypt
 
 
 def create_app():
@@ -17,3 +18,4 @@ def create_app():
 
 db = SQLAlchemy()
 login_manager = LoginManager()
+bcrypt = Bcrypt()
