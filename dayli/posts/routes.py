@@ -42,18 +42,30 @@ def post(post_id):
 @posts.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_post(post_id):
-    post_t = Post.query.get_or_404(post_id)
-    if post_t.user_id == current_user.get_id:
+    post = Post.query.get_or_404(post_id)
+    if post.user_id != int(current_user.get_id()):
         abort(403)
     form = PostForm()
     if form.validate_on_submit():
-        post_t.title = form.title.data
-        post_t.content = form.content.data
+        post.title = form.title.data
+        post.content = form.content.data
         db.session.commit()
         flash('Ваш пост обновлен!', 'success')
-        return redirect(url_for('posts.post', post_id=post_t.id))
+        return redirect(url_for('posts.post', post_id=post.id))
     elif request.method == 'GET':
-        form.title.data = post_t.title
-        form.content.data = post_t.content
+        form.title.data = post.title
+        form.content.data = post.content
     return render_template('create_post.html', title='Обновление поста',
                            form=form, legend='Обновление поста')
+
+
+@posts.route('/post/<int:post_id>/delete', methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.user_id != int(current_user.get_id()):
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Пост был удален', 'success')
+    return redirect(url_for('posts.allpost'))
