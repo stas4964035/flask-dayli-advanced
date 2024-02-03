@@ -43,14 +43,13 @@ def post(post_id):
 @login_required
 def update_post(post_id):
     post_t = Post.query.get_or_404(post_id)
-    if post_t.user_id != current_user:
-        pass    # abort(403)
-
+    if post_t.user_id == current_user.get_id:
+        abort(403)
     form = PostForm()
     if form.validate_on_submit():
         post_t.title = form.title.data
         post_t.content = form.content.data
-        db.session(post_t).commit()
+        db.session.commit()
         flash('Ваш пост обновлен!', 'success')
         return redirect(url_for('posts.post', post_id=post_t.id))
     elif request.method == 'GET':
