@@ -20,6 +20,10 @@ def create_app():
 
     from dayli.users.routes import users
     app.register_blueprint(users)
+
+    from dayli.posts.routes import posts
+    app.register_blueprint(posts)
+
     return app
 
 

@@ -32,7 +32,7 @@ def register():
 @users.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
+        return redirect(url_for('posts.allposts'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -40,7 +40,11 @@ def login():
         if user and bcrypt.check_password_hash(user.password,
                                                form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('main.home'))
+
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for(
+                'posts.allpost'))
+
         else:
             flash('Войти не удалось. Проверьте правильность ввода email и '
                   'пароля.')
