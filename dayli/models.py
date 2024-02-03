@@ -1,5 +1,5 @@
 from datetime import datetime
-from dayli import db
+
 from flask_login import UserMixin
 from dayli import db, login_manager
 
