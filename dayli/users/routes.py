@@ -83,6 +83,7 @@ def logout():
     logout_user()
     return redirect(url_for('main.home'))
 
+
 @users.route("/user/<string:username>")
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
@@ -105,7 +106,8 @@ def reset_password():
     return render_template('reset_request.html', title='Сброс пароля',
                            form=form)
 
-@users.route("/reset_password/<token>", methods=['GET','POST'])
+
+@users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('posts.allpost'))

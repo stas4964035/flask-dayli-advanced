@@ -95,5 +95,5 @@ class RequestResetForm(FlaskForm):
 class ResetPasswordForm(FlaskForm):
     password = PasswordField('Пароль:', validators=[DataRequired()])
     confirm_password = PasswordField('Подтверждение пароля:', validators=[
-        DataRequired(), EqualTo(password)])
+        DataRequired(), EqualTo('password')])
     submit = SubmitField('Сохранить пароль')
