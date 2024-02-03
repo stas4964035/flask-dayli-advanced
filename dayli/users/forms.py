@@ -47,6 +47,7 @@ class UpdateAccountForm(FlaskForm):
         'jpg', 'png'])])
     submit = SubmitField('Обновить')
 
+    @staticmethod
     def validate_username(self, username):
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
@@ -54,6 +55,7 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('Это имя уже занято. Пожалуйста, '
                                       'выберите другое.')
 
+    @staticmethod
     def validate_email(self, email):
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
@@ -76,4 +78,5 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = PasswordField('Подтверждение пароля:', validators=[
         DataRequired(), EqualTo(password)])
     submit = SubmitField('Изменить пароль')
+
 
