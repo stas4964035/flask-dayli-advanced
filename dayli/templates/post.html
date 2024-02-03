@@ -59,7 +59,9 @@
       <!-- <i class="fa fa-heart-o"></i>
       <i class="fa fa-bookmark-o"></i> -->
       {% if post.author == current_user %}
-        <div class="card-footer" style="font-size: 20px;"> {% if post.author == current_user %}<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{url_for('posts.post', post_id=post.id) }}">Обновить</a>
+        <div class="card-footer" style="font-size: 20px;"> {% if post.author
+          == current_user %}<a class="btn btn-secondary btn-sm mt-1 mb-1"
+                               href="{{url_for('posts.update_post', post_id=post.id) }}">Обновить</a>
         <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Удалить</button>
 
       {% endif %}

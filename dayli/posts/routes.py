@@ -37,3 +37,24 @@ def new_post():
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
+
+
+@posts.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
+@login_required
+def update_post(post_id):
+    post_t = Post.query.get_or_404(post_id)
+    if post_t.user_id != current_user:
+        pass    # abort(403)
+
+    form = PostForm()
+    if form.validate_on_submit():
+        post_t.title = form.title.data
+        post_t.content = form.content.data
+        db.session(post_t).commit()
+        flash('Ваш пост обновлен!', 'success')
+        return redirect(url_for('posts.post', post_id=post_t.id))
+    elif request.method == 'GET':
+        form.title.data = post_t.title
+        form.content.data = post_t.content
+    return render_template('create_post.html', title='Обновление поста',
+                           form=form, legend='Обновление поста')
