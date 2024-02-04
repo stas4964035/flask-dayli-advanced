@@ -161,3 +161,4 @@ cython_debug/
 
 .gitignore
 data/
+static/profile_pics/*
