@@ -6,3 +6,6 @@ class PostForm(FlaskForm):
     title = StringField('Название', validators=[DataRequired()])
     content = TextAreaField('Текст записи', validators=[DataRequired()])
     submit = SubmitField('Сохранить')
+
+class CommentForm(FlaskForm):
+    comment = StringField('Комментарий', validators=[DataRequired()])
