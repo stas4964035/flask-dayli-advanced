@@ -27,6 +27,9 @@ def create_app():
     from dayli.posts.routes import posts
     app.register_blueprint(posts)
 
+    from dayli.errors.handlers import errors
+    app.register_blueprint(errors)
+
     return app
 
 
