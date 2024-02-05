@@ -4,7 +4,7 @@ from itsdangerous import URLSafeTimedSerializer as Serializer
 from flask import current_app
 from dayli import db, login_manager
 
-
+# TODO: реализовать миграцию в https://github.com/stas4964035/flask-dayli
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
