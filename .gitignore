@@ -162,5 +162,5 @@ cython_debug/
 static/profile_pics/*
 dayli/config.local.py
 /data/
-/.idea/
+.idea/
 
