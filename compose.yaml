@@ -30,15 +30,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=noemail@nomail.com
-      - PGADMIN_DEFAULT_PASSWORD=123qwe
-    ports:
-      - "8080:80"
-    volumes:
-      - ./data/pgadmin:/var/lib/pgadmin
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    environment:
+#      - PGADMIN_DEFAULT_EMAIL=noemail@nomail.com
+#      - PGADMIN_DEFAULT_PASSWORD=123qwe
+#    ports:
+#      - "8080:80"
+#    volumes:
+#      - ./data/pgadmin:/var/lib/pgadmin
 volumes:
   db-data:
 secrets:

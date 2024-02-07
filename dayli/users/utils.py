@@ -21,7 +21,7 @@ def save_picture(form_picture):
 
 
 def send_reset_email(user):
-    token = user.get_reset_roken()
+    token = user.get_reset_token()
     msg = Message('Запрос на сброс пароля', sender='noreply@dayli.com',
                   recipients=[user.email])
     msg.body = f'''Чтобы сбросить пароль, перейдите по ссылке: 

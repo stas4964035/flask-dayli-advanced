@@ -1,8 +1,11 @@
 from datetime import datetime
 from flask_login import UserMixin
 from itsdangerous import URLSafeTimedSerializer as Serializer
+from jwt import encode, decode
+from datetime import datetime, timezone, timedelta
 from flask import current_app
 from dayli import db, login_manager
+
 
 # TODO: реализовать миграцию в https://github.com/stas4964035/flask-dayli
 @login_manager.user_loader
@@ -19,19 +22,20 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
 
-
     def get_reset_token(self, expires_sec=1800):
-        s = Serializer(current_app.config['SECRET_KEY'])
-        return s.dumps({'user_id': self.id})
+        payload = {'user_id': self.id, 'exp': datetime.now(timezone.utc) +
+                                              timedelta(seconds=expires_sec)}
+        return encode(payload, current_app.config['SECRET_KEY'],
+                      algorithm="HS256")
 
     @staticmethod
-    def verify_reset_token(token):
-        s = Serializer(current_app.config['SECRET_KEY'])
+    def verify_reset_token(token, leeway=10):
         try:
-            user_id = s.loads(token)['user_id']
+            data = decode(token, current_app.config['SECRET_KEY'],
+                          leeway=leeway, algorithms=['HS256'])
         except Exception:
             return None
-        return User.query.get(user_id)
+        return User.query.get(data['user_id'])
 
 
 class Post(db.Model):
@@ -58,5 +62,3 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     username = db.Column(db.String, db.ForeignKey('user.username'),
                          nullable=False)
-
-
