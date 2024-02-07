@@ -19,7 +19,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
 
-    def get_reset_roken(self, expires_sec=1800):
+
+    def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config['SECRET_KEY'])
         return s.dumps({'user_id': self.id})
 
@@ -49,6 +50,8 @@ class Post(db.Model):
 
 
 class Comment(db.Model):
+    # TODO: при смене имени пользователя выдает ошибку, связанную сименем
+    #  пользователя в комментарии, нужно заменяить user.username а user.id
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
