@@ -7,10 +7,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    develop:
-      watch:
-        - action: rebuild
-          path: .
+#    develop:
+#      watch:
+#        - action: rebuild
+#          path: .
   db:
     container_name: pgbd
     image: postgres
