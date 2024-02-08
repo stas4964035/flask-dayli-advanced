@@ -14,3 +14,7 @@ class PostForm(FlaskForm):
 
 class CommentForm(FlaskForm):
     comment = StringField('Комментарий', validators=[DataRequired()])
+
+
+class LikeForm(FlaskForm):
+    submit = SubmitField('Любо!')

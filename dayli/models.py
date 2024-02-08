@@ -7,7 +7,6 @@ from flask import current_app
 from dayli import db, login_manager
 
 
-# TODO: реализовать миграцию в https://github.com/stas4964035/flask-dayli
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -57,10 +56,18 @@ class Post(db.Model):
 
 class Comment(db.Model):
     # TODO: при смене имени пользователя выдает ошибку, связанную сименем
-    #  пользователя в комментарии, нужно заменяить user.username а user.id
+    #  пользователя в комментарии
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
     username = db.Column(db.String, db.ForeignKey('user.username'),
                          nullable=False)
+
+
+class Like(db.Model):
+    __table_args__ = (db.PrimaryKeyConstraint('user_id', 'post_id',
+                                               name='CompositePkForLike'),)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+
