@@ -48,6 +48,8 @@ class Post(db.Model):
                         nullable=False)
     comments = db.relationship('Comment', backref='title', lazy='select',
                                cascade='all, delete-orphan')
+    image_file = db.Column(db.String(20), nullable=False,
+                           default='default.png')
 
     def __repr__(self):
         return f"Запись('{self.title}', '{self.date_posted}')"
