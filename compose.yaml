@@ -11,6 +11,26 @@ services:
 #      watch:
 #        - action: rebuild
 #          path: .
+
+  #  Миграция:
+  #  set FLASK_APP=run.py
+  #  flask db init
+  #  flask db migrate
+  #  flask db upgrade
+  # Если у вас возникают ошибки, то всегда можно пересобрать миграции и выполнить их потворно.
+  # Для этого нужно:
+  # 1.	Удалить из базы данных таблицу, соответствующую модели, например:
+  #  2.	Удалить служебную таблицу alembic_version:
+  #  3.	Удалить директорию с миграциями из корневой папки проекта:
+  #  4.	Выполнить шаги еще раз:
+  #  set FLASK_APP=run.py
+  #  flask db init
+  #  flask db migrate
+  #  flask db upgrade
+  #  МИГРАЦИИ ДЛЯ ОТДЕЛЬНОЙ ТАБЛИЦЫ
+  #  flask db migrate -m "table_name table"
+  #  flask db upgrade
+
   db:
     container_name: pgbd
     image: postgres

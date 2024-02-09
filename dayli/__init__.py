@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_login import LoginManager
 from dayli.config import Config
 from flask_bcrypt import Bcrypt
@@ -11,10 +12,12 @@ bcrypt = Bcrypt()
 mail = Mail()
 
 
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     db.init_app(app)
+    migrate = Migrate(app, db)
     login_manager.init_app(app)
     bcrypt.init_app(app)
     mail.init_app(app)
